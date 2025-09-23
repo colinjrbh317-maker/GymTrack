@@ -2,7 +2,7 @@ import SwiftUI
 
 struct WorkoutDuplicationSheet: View {
     @Binding var isPresented: Bool
-    let originalWorkout: WorkoutModel
+    let originalWorkout: DetailedWorkout
     let onConfirm: (String) -> Void
 
     @State private var newWorkoutName: String = ""
@@ -26,7 +26,7 @@ struct WorkoutDuplicationSheet: View {
                             .font(.title2)
                             .fontWeight(.bold)
 
-                        Text("Create a copy of \"\(originalWorkout.displayName)\"")
+                        Text("Create a copy of \"\(originalWorkout.name)\"")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
@@ -117,7 +117,7 @@ struct WorkoutDuplicationSheet: View {
     }
 
     private var nameSuggestions: [String] {
-        let baseName = originalWorkout.displayName
+        let baseName = originalWorkout.name
         return [
             "\(baseName) Copy",
             "\(baseName) v2",
@@ -139,7 +139,7 @@ struct WorkoutDuplicationSheet: View {
     }
 
     private func generateDefaultName() -> String {
-        let baseName = originalWorkout.displayName
+        let baseName = originalWorkout.name
         return "\(baseName) Copy"
     }
 }
@@ -147,10 +147,9 @@ struct WorkoutDuplicationSheet: View {
 #Preview {
     WorkoutDuplicationSheet(
         isPresented: .constant(true),
-        originalWorkout: WorkoutModel(
+        originalWorkout: DetailedWorkout(
             name: "Push Day",
-            createdAt: Date(),
-            updatedAt: Date()
+            exercises: []
         )
     ) { name in
         print("Duplicated workout named: \(name)")

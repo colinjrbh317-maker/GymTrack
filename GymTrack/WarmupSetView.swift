@@ -181,20 +181,25 @@ struct WarmupSetsView: View {
 // MARK: - Warm-up Configuration View
 
 struct WarmupConfigurationView: View {
-    @Binding var workoutExercise: WorkoutExerciseModel
+    @Binding var workoutExercise: WorkoutExercise
     @State private var showingWeightInput = false
     @State private var tempWorkingWeight: String = ""
+    @State private var enableWarmups: Bool = false
+    @State private var warmupCount: Int = 3
+    @State private var workingWeight: Double = 0
+    @State private var weightUnit: WarmupCalculator.WeightUnit = .pounds
+    @State private var useFineIncrements: Bool = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             // Enable/Disable Toggle
             HStack {
-                Toggle("Enable Warm-ups", isOn: $workoutExercise.enableWarmups)
+                Toggle("Enable Warm-ups", isOn: $enableWarmups)
                     .font(.subheadline)
                     .fontWeight(.medium)
             }
 
-            if workoutExercise.enableWarmups {
+            if enableWarmups {
                 VStack(alignment: .leading, spacing: 12) {
                     // Working Weight Input
                     VStack(alignment: .leading, spacing: 4) {
@@ -206,9 +211,9 @@ struct WarmupConfigurationView: View {
                         HStack {
                             Button(action: { showingWeightInput.toggle() }) {
                                 HStack {
-                                    Text(workoutExercise.formattedWorkingWeight)
+                                    Text(workingWeight > 0 ? String(format: "%.1f %@", workingWeight, weightUnit.rawValue) : "Set Weight")
                                         .font(.subheadline)
-                                        .foregroundColor(workoutExercise.workingWeight > 0 ? .primary : .secondary)
+                                        .foregroundColor(workingWeight > 0 ? .primary : .secondary)
 
                                     Image(systemName: "pencil")
                                         .font(.caption2)
@@ -234,15 +239,15 @@ struct WarmupConfigurationView: View {
                         HStack {
                             ForEach(1...5, id: \.self) { count in
                                 Button("\(count)") {
-                                    workoutExercise.warmupCount = count
+                                    warmupCount = count
                                 }
                                 .font(.subheadline)
                                 .fontWeight(.medium)
-                                .foregroundColor(workoutExercise.warmupCount == count ? .white : .accentColor)
+                                .foregroundColor(warmupCount == count ? .white : .accentColor)
                                 .frame(width: 32, height: 32)
                                 .background(
                                     Circle().fill(
-                                        workoutExercise.warmupCount == count ?
+                                        warmupCount == count ?
                                         Color.accentColor : Color.accentColor.opacity(0.1)
                                     )
                                 )
@@ -259,7 +264,7 @@ struct WarmupConfigurationView: View {
                             .fontWeight(.medium)
                             .foregroundColor(.secondary)
 
-                        Picker("Weight Unit", selection: $workoutExercise.weightUnit) {
+                        Picker("Weight Unit", selection: $weightUnit) {
                             Text("lbs").tag(WarmupCalculator.WeightUnit.pounds)
                             Text("kg").tag(WarmupCalculator.WeightUnit.kilograms)
                         }
@@ -267,13 +272,22 @@ struct WarmupConfigurationView: View {
                     }
 
                     // Fine Increments Toggle
-                    Toggle("Use Fine Increments (\(workoutExercise.weightUnit.fineIncrement, specifier: "%.1f") \(workoutExercise.weightUnit.rawValue))", isOn: $workoutExercise.useFineIncrements)
+                    Toggle("Use Fine Increments (\(weightUnit.fineIncrement, specifier: "%.1f") \(weightUnit.rawValue))", isOn: $useFineIncrements)
                         .font(.caption)
                         .foregroundColor(.secondary)
 
                     // Generated Warm-ups Preview
-                    if workoutExercise.workingWeight > 0 {
-                        WarmupSetsView(warmupSets: workoutExercise.generateWarmupSets())
+                    if workingWeight > 0 {
+                        let settings = WarmupCalculator.WarmupSettings(
+                            numberOfWarmups: warmupCount,
+                            weightUnit: weightUnit,
+                            useFineIncrements: useFineIncrements
+                        )
+                        let warmupSets = WarmupCalculator.generateWarmupSets(
+                            workingWeight: workingWeight,
+                            settings: settings
+                        )
+                        WarmupSetsView(warmupSets: warmupSets)
                     }
                 }
                 .padding(.leading, 16)
@@ -285,7 +299,7 @@ struct WarmupConfigurationView: View {
 
             Button("Save") {
                 if let weight = Double(tempWorkingWeight), weight > 0 {
-                    workoutExercise.workingWeight = weight
+                    workingWeight = weight
                 }
                 tempWorkingWeight = ""
             }
@@ -298,9 +312,9 @@ struct WarmupConfigurationView: View {
         }
         .onAppear {
             // Auto-enable warm-ups for compound lifts
-            if !workoutExercise.enableWarmups {
-                // Note: This would need exercise name from the exercise library
-                // For now, we'll leave it to manual enablement
+            let exerciseName = workoutExercise.exerciseName.lowercased()
+            if !enableWarmups && WarmupCalculator.isCompoundLift(exerciseName) {
+                enableWarmups = true
             }
         }
     }
@@ -342,15 +356,11 @@ struct WarmupConfigurationView: View {
 }
 
 #Preview("Warm-up Configuration") {
-    @State var sampleExercise = WorkoutExerciseModel(
-        workoutId: UUID(),
-        exerciseId: UUID(),
-        targetSets: 3,
-        targetReps: 10,
-        restSeconds: 120,
-        orderIndex: 1,
-        enableWarmups: true,
-        workingWeight: 185
+    @State var sampleExercise = WorkoutExercise(
+        exerciseName: "Bench Press",
+        sets: 3,
+        reps: 10,
+        restSeconds: 120
     )
 
     WarmupConfigurationView(workoutExercise: $sampleExercise)
