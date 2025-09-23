@@ -1,5 +1,4 @@
 import SwiftUI
-import WorkoutBuilder
 
 struct WorkoutDuplicationSheet: View {
     @Binding var isPresented: Bool

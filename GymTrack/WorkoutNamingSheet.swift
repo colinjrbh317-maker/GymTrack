@@ -1,5 +1,4 @@
 import SwiftUI
-import WorkoutBuilder
 
 struct WorkoutNamingSheet: View {
     @Binding var isPresented: Bool

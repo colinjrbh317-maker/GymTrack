@@ -1,5 +1,4 @@
 import SwiftUI
-import SharedCore
 
 struct WarmupSetView: View {
     let warmupSet: WarmupCalculator.WarmupSet
