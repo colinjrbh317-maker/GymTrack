@@ -704,6 +704,7 @@ struct ContentView: View {
 struct WorkoutBuilderTab: View {
     @ObservedObject var workoutStore: WorkoutStore
     @State private var showingWorkoutBuilder = false
+    @State private var showingWorkoutNaming = false
 
     var body: some View {
         NavigationView {
@@ -726,7 +727,7 @@ struct WorkoutBuilderTab: View {
                 }
 
                 Button("Create New Workout") {
-                    showingWorkoutBuilder = true
+                    showingWorkoutNaming = true
                 }
                 .font(.headline)
                 .foregroundColor(.white)
@@ -754,6 +755,15 @@ struct WorkoutBuilderTab: View {
                 Spacer()
             }
             .navigationTitle("Workout Builder")
+        }
+        .sheet(isPresented: $showingWorkoutNaming) {
+            WorkoutNamingSheet(isPresented: $showingWorkoutNaming) { workoutName in
+                // Create a new workout with the given name
+                let newWorkout = DetailedWorkout(name: workoutName, exercises: [])
+                workoutStore.savedWorkouts.append(newWorkout)
+                // Then open the workout builder
+                showingWorkoutBuilder = true
+            }
         }
         .sheet(isPresented: $showingWorkoutBuilder) {
             AdvancedWorkoutBuilder(workoutStore: workoutStore)
@@ -1171,6 +1181,8 @@ struct RecentWorkoutCard: View {
 // MARK: - Other Tabs
 struct WorkoutLibraryTab: View {
     @ObservedObject var workoutStore: WorkoutStore
+    @State private var workoutToDuplicate: DetailedWorkout?
+    @State private var showingDuplicationSheet = false
 
     var body: some View {
         NavigationView {
@@ -1195,12 +1207,53 @@ struct WorkoutLibraryTab: View {
                         NavigationLink(destination: WorkoutDetailView(workout: $workoutStore.savedWorkouts[index], workoutStore: workoutStore)) {
                             WorkoutLibraryRow(workout: workoutStore.savedWorkouts[index])
                         }
+                        .contextMenu {
+                            Button(action: {
+                                showDuplicationSheet(for: workoutStore.savedWorkouts[index])
+                            }) {
+                                Label("Duplicate", systemImage: "doc.on.doc")
+                            }
+
+                            Button(action: {
+                                deleteWorkout(at: index)
+                            }) {
+                                Label("Delete", systemImage: "trash")
+                            }
+                            .foregroundColor(.red)
+                        }
                     }
                     .onDelete(perform: deleteWorkouts)
                 }
             }
         }
         .navigationTitle("My Workouts")
+        .sheet(isPresented: $showingDuplicationSheet) {
+            if let workout = workoutToDuplicate {
+                WorkoutDuplicationSheet(
+                    isPresented: $showingDuplicationSheet,
+                    originalWorkout: workout
+                ) { newName in
+                    duplicateWorkout(workout, newName: newName)
+                }
+            }
+        }
+    }
+
+    private func showDuplicationSheet(for workout: DetailedWorkout) {
+        workoutToDuplicate = workout
+        showingDuplicationSheet = true
+    }
+
+    private func duplicateWorkout(_ workout: DetailedWorkout, newName: String) {
+        let duplicatedWorkout = DetailedWorkout(
+            name: newName,
+            exercises: workout.exercises
+        )
+        workoutStore.savedWorkouts.append(duplicatedWorkout)
+    }
+
+    private func deleteWorkout(at index: Int) {
+        workoutStore.savedWorkouts.remove(at: index)
     }
 
     private func deleteWorkouts(offsets: IndexSet) {
