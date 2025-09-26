@@ -141,6 +141,9 @@ struct WorkoutBuilderView: View {
                             deleteExercise(workoutExercise.id)
                         }
                     )
+                    .onTapGesture {
+                        // Explicitly do nothing to prevent any accidental taps
+                    }
                 }
             }
             .padding(.horizontal)
@@ -336,19 +339,11 @@ struct WorkoutExerciseRow: View {
 
                 Spacer()
 
-                Button(action: {
-                    showingDeleteConfirmation = true
-                }) {
-                    Image(systemName: "trash.fill")
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(.white)
-                        .frame(width: 28, height: 28)
-                        .background(Color.red)
-                        .clipShape(Circle())
-                }
-                .buttonStyle(PlainButtonStyle())
-                .accessibilityLabel("Delete exercise")
-                .accessibilityHint("Double tap to confirm deletion")
+                DeleteButton(
+                    onDelete: {
+                        showingDeleteConfirmation = true
+                    }
+                )
             }
 
             // Configuration Controls
@@ -440,7 +435,7 @@ struct WorkoutExerciseRow: View {
         .background(Color(.systemBackground))
         .cornerRadius(12)
         .shadow(color: .gray.opacity(0.2), radius: 2, x: 0, y: 1)
-        .contentShape(Rectangle()) // Ensure the entire area is tappable for buttons
+        .allowsHitTesting(true) // Ensure hit testing works properly
         .alert("Delete Exercise", isPresented: $showingDeleteConfirmation) {
             Button("Delete", role: .destructive) {
                 onDelete()
@@ -502,6 +497,35 @@ struct StatView: View {
                 .foregroundColor(.secondary)
         }
         .frame(maxWidth: .infinity)
+    }
+}
+
+// MARK: - Delete Button Component
+
+struct DeleteButton: View {
+    let onDelete: () -> Void
+    @State private var isPressed = false
+    
+    var body: some View {
+        Image(systemName: "trash.fill")
+            .font(.system(size: 16, weight: .medium))
+            .foregroundColor(.white)
+            .frame(width: 28, height: 28)
+            .background(Color.red)
+            .clipShape(Circle())
+            .scaleEffect(isPressed ? 0.9 : 1.0)
+            .onTapGesture {
+                // Do nothing on tap - require long press
+            }
+            .onLongPressGesture(minimumDuration: 0.5, maximumDistance: 50) {
+                onDelete()
+            } onPressingChanged: { pressing in
+                withAnimation(.easeInOut(duration: 0.1)) {
+                    isPressed = pressing
+                }
+            }
+            .accessibilityLabel("Delete exercise")
+            .accessibilityHint("Long press to confirm deletion")
     }
 }
 
