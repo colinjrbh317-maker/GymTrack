@@ -1,0 +1,202 @@
+[
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "name": "Bench Press",
+    "instructions": "Lie on bench with eyes under the bar. Grip bar slightly wider than shoulders. Lower bar to chest with control. Press explosively back to starting position. Keep feet planted and core tight throughout movement.",
+    "imageName": "bench_press",
+    "equipment": "Barbell",
+    "primary_muscle_groups": ["Chest"],
+    "secondary_muscle_groups": ["Triceps", "Shoulders"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d480",
+    "name": "Incline Bench Press",
+    "instructions": "Set bench to 30-45 degree incline. Lie back and grip bar slightly wider than shoulders. Lower bar to upper chest. Press back to starting position focusing on upper chest activation.",
+    "imageName": "incline_bench_press",
+    "equipment": "Barbell",
+    "primary_muscle_groups": ["Chest"],
+    "secondary_muscle_groups": ["Triceps", "Shoulders"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d481",
+    "name": "Squat",
+    "instructions": "Stand with feet shoulder-width apart. Rest bar on upper traps. Lower down by sitting back and bending knees. Keep chest up and knees in line with toes. Drive through heels to return to standing.",
+    "imageName": "squat",
+    "equipment": "Barbell",
+    "primary_muscle_groups": ["Quadriceps"],
+    "secondary_muscle_groups": ["Glutes", "Hamstrings"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d482",
+    "name": "Deadlift",
+    "instructions": "Stand with feet hip-width apart, bar over mid-foot. Hinge at hips and knees to grip bar. Keep back straight. Drive through heels and hips to stand tall. Lower with control by pushing hips back.",
+    "imageName": "deadlift",
+    "equipment": "Barbell",
+    "primary_muscle_groups": ["Hamstrings"],
+    "secondary_muscle_groups": ["Glutes", "Back", "Traps"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d483",
+    "name": "Pull-up",
+    "instructions": "Hang from pull-up bar with arms fully extended. Pull body up until chin clears bar. Lower with control back to starting position. Keep core engaged throughout movement.",
+    "imageName": "pullup",
+    "equipment": "Bodyweight",
+    "primary_muscle_groups": ["Lats"],
+    "secondary_muscle_groups": ["Biceps", "Back"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d484",
+    "name": "Push-up",
+    "instructions": "Start in plank position with hands slightly wider than shoulders. Lower chest to floor while keeping straight line from head to heels. Push back up to starting position.",
+    "imageName": "pushup",
+    "equipment": "Bodyweight",
+    "primary_muscle_groups": ["Chest"],
+    "secondary_muscle_groups": ["Triceps", "Shoulders"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d485",
+    "name": "Overhead Press",
+    "instructions": "Stand with feet hip-width apart. Press bar from shoulders directly overhead. Keep core tight and avoid arching back. Lower bar back to shoulders with control.",
+    "imageName": "overhead_press",
+    "equipment": "Barbell",
+    "primary_muscle_groups": ["Shoulders"],
+    "secondary_muscle_groups": ["Triceps", "Chest"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d486",
+    "name": "Bent-over Row",
+    "instructions": "Hinge at hips with slight knee bend. Keep back straight and chest up. Pull bar to lower chest/upper abdomen. Squeeze shoulder blades together. Lower with control.",
+    "imageName": "bent_over_row",
+    "equipment": "Barbell",
+    "primary_muscle_groups": ["Back"],
+    "secondary_muscle_groups": ["Biceps", "Lats"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d487",
+    "name": "Dumbbell Chest Press",
+    "instructions": "Lie on bench holding dumbbells at chest level. Press dumbbells up and together. Lower with control allowing deeper stretch than barbell. Keep core engaged throughout.",
+    "imageName": "dumbbell_chest_press",
+    "equipment": "Dumbbell",
+    "primary_muscle_groups": ["Chest"],
+    "secondary_muscle_groups": ["Triceps", "Shoulders"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d488",
+    "name": "Goblet Squat",
+    "instructions": "Hold dumbbell at chest level with both hands. Stand with feet slightly wider than shoulders. Lower down keeping chest up and weight on heels. Drive through heels to stand.",
+    "imageName": "goblet_squat",
+    "equipment": "Dumbbell",
+    "primary_muscle_groups": ["Quadriceps"],
+    "secondary_muscle_groups": ["Glutes", "Hamstrings"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d489",
+    "name": "Dumbbell Row",
+    "instructions": "Place one knee and hand on bench. Hold dumbbell in opposite hand. Pull dumbbell to hip keeping elbow close to body. Squeeze back muscles at top. Lower with control.",
+    "imageName": "dumbbell_row",
+    "equipment": "Dumbbell",
+    "primary_muscle_groups": ["Back"],
+    "secondary_muscle_groups": ["Biceps", "Lats"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d490",
+    "name": "Dip",
+    "instructions": "Support body on parallel bars with arms straight. Lower body by bending elbows until shoulders are below elbows. Push back up to starting position. Keep body upright.",
+    "imageName": "dip",
+    "equipment": "Bodyweight",
+    "primary_muscle_groups": ["Triceps"],
+    "secondary_muscle_groups": ["Chest", "Shoulders"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d491",
+    "name": "Plank",
+    "instructions": "Start in push-up position but on forearms. Keep straight line from head to heels. Engage core and glutes. Hold position breathing normally. Avoid sagging hips or raising butt.",
+    "imageName": "plank",
+    "equipment": "Bodyweight",
+    "primary_muscle_groups": ["Abs"],
+    "secondary_muscle_groups": ["Shoulders", "Back"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d492",
+    "name": "Lateral Raise",
+    "instructions": "Hold dumbbells at sides with slight bend in elbows. Raise weights out to sides until arms are parallel to floor. Lower with control. Keep slight forward lean.",
+    "imageName": "lateral_raise",
+    "equipment": "Dumbbell",
+    "primary_muscle_groups": ["Shoulders"],
+    "secondary_muscle_groups": ["Delts"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d493",
+    "name": "Romanian Deadlift",
+    "instructions": "Hold bar with overhand grip. Keep slight bend in knees. Hinge at hips pushing butt back. Lower bar along legs feeling stretch in hamstrings. Drive hips forward to return.",
+    "imageName": "romanian_deadlift",
+    "equipment": "Barbell",
+    "primary_muscle_groups": ["Hamstrings"],
+    "secondary_muscle_groups": ["Glutes", "Back"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d494",
+    "name": "Leg Press",
+    "instructions": "Sit in leg press machine with feet on platform shoulder-width apart. Lower weight by bending knees to 90 degrees. Press through heels to return to starting position.",
+    "imageName": "leg_press",
+    "equipment": "Machine",
+    "primary_muscle_groups": ["Quadriceps"],
+    "secondary_muscle_groups": ["Glutes", "Hamstrings"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d495",
+    "name": "Bicep Curl",
+    "instructions": "Hold dumbbells at sides with palms facing forward. Curl weights up by flexing biceps. Keep elbows stationary at sides. Lower with control back to starting position.",
+    "imageName": "bicep_curl",
+    "equipment": "Dumbbell",
+    "primary_muscle_groups": ["Biceps"],
+    "secondary_muscle_groups": ["Forearms"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d496",
+    "name": "Tricep Extension",
+    "instructions": "Lie on bench holding dumbbell with both hands overhead. Lower weight behind head by bending elbows. Keep upper arms stationary. Extend back to starting position.",
+    "imageName": "tricep_extension",
+    "equipment": "Dumbbell",
+    "primary_muscle_groups": ["Triceps"],
+    "secondary_muscle_groups": ["Shoulders"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d497",
+    "name": "Lunge",
+    "instructions": "Step forward into lunge position. Lower back knee toward ground keeping front knee over ankle. Push through front heel to return to starting position. Alternate legs.",
+    "imageName": "lunge",
+    "equipment": "Bodyweight",
+    "primary_muscle_groups": ["Quadriceps"],
+    "secondary_muscle_groups": ["Glutes", "Hamstrings"],
+    "createdAt": "2025-09-16T00:00:00Z"
+  },
+  {
+    "id": "f47ac10b-58cc-4372-a567-0e02b2c3d498",
+    "name": "Calf Raise",
+    "instructions": "Stand with balls of feet on platform, heels hanging off. Raise up onto toes as high as possible. Hold briefly then lower heels below platform level for stretch.",
+    "imageName": "calf_raise",
+    "equipment": "Bodyweight",
+    "primary_muscle_groups": ["Calves"],
+    "secondary_muscle_groups": [],
+    "createdAt": "2025-09-16T00:00:00Z"
+  }
+]
