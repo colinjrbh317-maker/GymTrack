@@ -9,6 +9,8 @@ struct WorkoutBuilderView: View {
     @State private var showingWorkoutNaming = false
     @State private var autoOpenExerciseLibrary = false
     @State private var errorMessage: String?
+    @State private var exerciseToDelete: WorkoutExerciseModel?
+    @State private var showingDeleteConfirmation = false
 
     var body: some View {
         NavigationView {
@@ -67,6 +69,24 @@ struct WorkoutBuilderView: View {
                 Button("OK") { errorMessage = nil }
             } message: {
                 Text(errorMessage ?? "")
+            }
+            .alert("Delete Exercise", isPresented: $showingDeleteConfirmation) {
+                Button("Delete", role: .destructive) {
+                    if let exercise = exerciseToDelete {
+                        deleteExercise(exercise.id)
+                    }
+                    exerciseToDelete = nil
+                }
+                Button("Cancel", role: .cancel) {
+                    exerciseToDelete = nil
+                }
+            } message: {
+                if let exercise = exerciseToDelete,
+                   let exerciseName = workoutBuilder.getExercise(for: exercise)?.name {
+                    Text("Are you sure you want to remove \"\(exerciseName)\" from your workout?")
+                } else {
+                    Text("Are you sure you want to remove this exercise from your workout?")
+                }
             }
         }
     }
@@ -128,26 +148,30 @@ struct WorkoutBuilderView: View {
     }
 
     private var exerciseListView: some View {
-        ScrollView {
-            LazyVStack(spacing: 12) {
-                ForEach(workoutBuilder.workoutExercises) { workoutExercise in
-                    WorkoutExerciseRow(
-                        workoutExercise: workoutExercise,
-                        exercise: workoutBuilder.getExercise(for: workoutExercise),
-                        onUpdate: { sets, reps, rest in
-                            updateExercise(workoutExercise.id, sets: sets, reps: reps, restSeconds: rest)
-                        },
-                        onDelete: {
-                            deleteExercise(workoutExercise.id)
-                        }
-                    )
-                    .onTapGesture {
-                        // Explicitly do nothing to prevent any accidental taps
+        List {
+            ForEach(workoutBuilder.workoutExercises) { workoutExercise in
+                WorkoutExerciseRow(
+                    workoutExercise: workoutExercise,
+                    exercise: workoutBuilder.getExercise(for: workoutExercise),
+                    onUpdate: { sets, reps, rest in
+                        updateExercise(workoutExercise.id, sets: sets, reps: reps, restSeconds: rest)
+                    },
+                    onDelete: {
+                        deleteExercise(workoutExercise.id)
                     }
+                )
+                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                .listRowSeparator(.hidden)
+                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                    Button("Delete") {
+                        exerciseToDelete = workoutExercise
+                        showingDeleteConfirmation = true
+                    }
+                    .tint(.red)
                 }
             }
-            .padding(.horizontal)
         }
+        .listStyle(PlainListStyle())
     }
 
     private var emptyExerciseListView: some View {
@@ -304,7 +328,6 @@ struct WorkoutExerciseRow: View {
     @State private var reps: Int
     @State private var restSeconds: Int
     @State private var showingDetails = false
-    @State private var showingDeleteConfirmation = false
 
     init(
         workoutExercise: WorkoutExerciseModel,
@@ -338,12 +361,6 @@ struct WorkoutExerciseRow: View {
                 }
 
                 Spacer()
-
-                DeleteButton(
-                    onDelete: {
-                        showingDeleteConfirmation = true
-                    }
-                )
             }
 
             // Configuration Controls
@@ -436,14 +453,6 @@ struct WorkoutExerciseRow: View {
         .cornerRadius(12)
         .shadow(color: .gray.opacity(0.2), radius: 2, x: 0, y: 1)
         .allowsHitTesting(true) // Ensure hit testing works properly
-        .alert("Delete Exercise", isPresented: $showingDeleteConfirmation) {
-            Button("Delete", role: .destructive) {
-                onDelete()
-            }
-            Button("Cancel", role: .cancel) { }
-        } message: {
-            Text("Are you sure you want to remove \"\(exercise?.name ?? "this exercise")\" from your workout?")
-        }
     }
 
     // MARK: - Helper Methods
@@ -500,34 +509,6 @@ struct StatView: View {
     }
 }
 
-// MARK: - Delete Button Component
-
-struct DeleteButton: View {
-    let onDelete: () -> Void
-    @State private var isPressed = false
-    
-    var body: some View {
-        Image(systemName: "trash.fill")
-            .font(.system(size: 16, weight: .medium))
-            .foregroundColor(.white)
-            .frame(width: 28, height: 28)
-            .background(Color.red)
-            .clipShape(Circle())
-            .scaleEffect(isPressed ? 0.9 : 1.0)
-            .onTapGesture {
-                // Do nothing on tap - require long press
-            }
-            .onLongPressGesture(minimumDuration: 0.5, maximumDistance: 50) {
-                onDelete()
-            } onPressingChanged: { pressing in
-                withAnimation(.easeInOut(duration: 0.1)) {
-                    isPressed = pressing
-                }
-            }
-            .accessibilityLabel("Delete exercise")
-            .accessibilityHint("Long press to confirm deletion")
-    }
-}
 
 #Preview {
     WorkoutBuilderView()
